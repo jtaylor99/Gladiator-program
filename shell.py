@@ -6,9 +6,13 @@ def get_name_and_assign_stats():
     print('Welcome to the Game of Gladiators!', name_1.upper(), '!')
     name_2 = input('What\'s your name?')
     print('Welcome to the Game of Gladiators!', name_2.upper(), '!')
-    name_1 = core.new_gladiator(name_1, 100, 0, 10, 20)
-    name_2 = core.new_gladiator(name_2, 100, 0, 10, 20)
+    name_1 = core.new_gladiator(name_1, 100, 0, 10, 20, 1)
+    name_2 = core.new_gladiator(name_2, 100, 0, 10, 20, 1)
     return name_1, name_2
+
+
+def weapons():
+    weapons = []
 
 
 def gladiator_turn(name_1, name_2):
@@ -16,6 +20,7 @@ def gladiator_turn(name_1, name_2):
     while True:
 
         print('>>>>[A]ttack')
+        print('>>>>[L]evel up')
         print('>>>>[H]eal')
         print('>>>>[P]ass')
         print('>>>>[Q]uit')
@@ -36,7 +41,15 @@ def gladiator_turn(name_1, name_2):
             if result == 'hit':
                 print('{} health is now at:{}'.format(name_2['Name'].upper(),
                                                       name_2['health']))
+                print('{} rage is now {}'.format(name_1['Name'],
+                                                 name_1['rage']))
                 return None
+        if action == 'L':
+            result = core.leveled_up(name_1)
+            print('{} has leveled up'.format(name_1['Name'], name_2['Name']))
+            print('{} is now at level{}'.format(name_1['Name'],
+                                                name_1['level']))
+            return None
         if action == 'H':
             print(name_1['Name'], 'Heals')
             core.heal(name_1)
