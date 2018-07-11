@@ -22,7 +22,7 @@ def gladiator_turn(name_1, name_2):
         action = input('{} What would you like to do?'.format(
             name_1['Name'].upper()))
         if action == 'A':
-            print(name_1['Name'], 'Attacks')
+            print(name_1['Name'].upper(), 'Attacks')
             core.attack(name_1, name_2)
             print('{} health is now at:{}'.format(name_2['Name'].upper(),
                                                   name_2['health']))
@@ -37,16 +37,36 @@ def gladiator_turn(name_1, name_2):
         if action == 'P':
             break
         if action == 'Q':
+            print('{} has run away'.format(name_1['Name'],
+                                           name_2['Name'].upper()))
             quit()
+
         else:
             print('Please choose a valid option!')
+
+
+def is_winner(name_1, name_2):
+    if name_2['health'] <= 0:
+        print('winner:{}'.format(name_1['Name'].upper()))
+    if name_1['health'] <= 0:
+        print('winner:{}'.format(name_2['Name'].upper()))
+
+
+def is_dead(name_1, name_2):
+    if name_1['health'] <= 0:
+        return True
+    elif name_2['health'] <= 0:
+        return True
 
 
 def main():
     name_1, name_2 = get_name_and_assign_stats()
     while True:
+        if is_dead(name_1, name_2):
+            break
         gladiator_turn(name_1, name_2)
         gladiator_turn(name_2, name_1)
+    is_winner(name_1, name_2)
 
 
 if __name__ == '__main__':
