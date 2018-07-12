@@ -11,8 +11,30 @@ def get_name_and_assign_stats():
     return name_1, name_2
 
 
-def weapons():
-    weapons = []
+def choose_a_weapon(name_1, name_2):
+    while True:
+        print(
+            'sword , pick axe ,a weird looking staff,boxing gloves,pocket knife'
+        )
+        r = input(' {} choose your weapon'.format(name_1['Name'],
+                                                  name_2['Name'].upper()))
+        if r == 'sword':
+            return {'name': 'sword', 'damage': 10, 'rage': 5}
+        elif r == 'pick axe':
+            return {'name': 'pick axe', 'damage': 7, 'rage': 5}
+        elif r == 'a weird looking staff':
+            return {
+                'name': 'a weird looking staff',
+                'damage': 8,
+                'rage': 5,
+                'heal': 10
+            }
+        elif r == 'boxing gloves':
+            return {'name': 'boxing gloves', 'damage': 10, 'rage': 5}
+        elif r == 'pocket knife':
+            return {'name': 'pocket knife', 'damage': 5, 'rage': 5}
+        else:
+            print('please choose a valid option!')
 
 
 def gladiator_turn(name_1, name_2):
@@ -27,11 +49,16 @@ def gladiator_turn(name_1, name_2):
         action = input('{} What would you like to do?'.format(
             name_1['Name'].upper()))
         if action == 'A':
-            print(name_1['Name'].upper(), 'Attacks')
             result = core.attack(name_1, name_2)
+            print(name_1['Name'].upper(), 'Attacks')
+
             if result == 'miss':
                 print('{} misses'.format(name_1['Name'],
                                          name_2['Name'].upper()))
+                return None
+
+            if result == 'evade':
+                print('{} evades the attack'.format(name_2['Name']))
                 return None
             if result == 'crit':
                 print('critical damage!')
@@ -44,6 +71,7 @@ def gladiator_turn(name_1, name_2):
                 print('{} rage is now {}'.format(name_1['Name'],
                                                  name_1['rage']))
                 return None
+
         if action == 'L':
             result = core.leveled_up(name_1)
             print('{} has leveled up'.format(name_1['Name'], name_2['Name']))
@@ -119,6 +147,8 @@ $$$;      $$$$$$$$$$$$$$$                        Tb    _  :$$$
                    """^^^T$$$$$$$$$$P^^^"""
 ''')
     name_1, name_2 = get_name_and_assign_stats()
+    choose_a_weapon(name_1, name_2)
+    choose_a_weapon(name_2, name_1)
     while True:
         gladiator_turn(name_1, name_2)
         if is_dead(name_1, name_2):
